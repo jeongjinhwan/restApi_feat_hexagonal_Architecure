@@ -1,6 +1,6 @@
 ## Application spec
-1. [헥사고날 아키텍쳐](#-헥사고날-아키텍쳐)
-2. [openapi.generator](#-openapi.generator)
+1. [헥사고날 아키텍쳐](#헥사고날-아키텍쳐)
+2. [openapi.generator](#openapi.generator)
 ## 헥사고날 아키텍쳐
 - application 안의 service를 기준으로, in/out port를 interface 구성하여, 유연성과 확장성을 고려한 구조.
 - 기존의 mvc2 패턴과 비슷한 구조에서 영역을 명확화 하였다.
