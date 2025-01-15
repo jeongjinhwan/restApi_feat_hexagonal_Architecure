@@ -1,39 +1,108 @@
 plugins {
-	id 'java'
-	id 'war'
-	id 'org.springframework.boot' version '3.4.1'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id "org.openapi.generator" version "7.10.0"
 }
 
 group = 'com.board'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    all {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+}
+
+def serverSwaggerMap = [
+    "sample": "board.yml"
+]
+
+serverSwaggerMap.each{entry ->
+    tasks.create("openApiGenerate-server-" + entry.key, org.openapitools.generator.gradle.plugin.tasks.GenerateTask, {
+        generatorName.set("spring")
+        library.set("spring-boot")
+        inputSpec.set(project.file("$rootDir/src/main/resources/openapi/${entry.value}").absolutePath)
+        outputDir.set(project.file("$buildDir/generated-sources").absolutePath)
+        apiPackage.set("com.${entry.key}.adapter.in.web")
+        modelPackage.set("com.${entry.key}.adapter.in.dto")
+        configOptions.set(
+            [
+                interfaceOnly: "true",
+                useBeanValidation: "true",
+                performBeanValidation: "true",
+                serializableModel: "true",
+                sourceFolder: "/java",
+                implFolder: "/java",
+                unhandledException: "true",
+                useTags: "true"
+            ]
+        )
+        importMappings.set([
+                "ServerHttpRequest" : "org.springframework.http.server.reactive.ServerHttpRequest",
+                "ServerHttpResponse" : "org.springframework.http.server.reactive.ServerHttpResponse"
+        ])
+    })
+}
+
+tasks.register("openApiGenerateServer") {
+    print serverSwaggerMap.entrySet().stream().map({entry -> "openApiGenerate-server-${entry.key}"}).toArray()
+    dependsOn(serverSwaggerMap.entrySet().stream().map({entry -> "openApiGenerate-server-${entry.key}"}).toArray())
+}
+
+tasks.register("openApiGenerateAll") {
+    dependsOn(["openApiGenerateServer"])
+}
+
+test {
+    enabled = false
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'build/generated-sources/java']
+        }
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 기본 의존성 정보.
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // spring doc openapi 적용 정보.
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
+    //  3. openapi generator 적용을 위한 정보
+    implementation "org.openapitools:openapi-generator-gradle-plugin:7.8.0"
+
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+compileJava.dependsOn tasks.named("openApiGenerateServer")
