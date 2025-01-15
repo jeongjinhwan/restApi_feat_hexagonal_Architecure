@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class BoardController implements BoardControllerApi{
+public class BoardController implements BoardControllerApi {
 
     private final IBoardUseCase boardUseCase;
 
@@ -36,8 +36,8 @@ public class BoardController implements BoardControllerApi{
 
     @Override
     public ResponseEntity<Object> createBoard(
-        @Parameter(name = "BoardDTO", description = "", required = true) @Valid @RequestBody BoardDTO boardDTO
-    ) throws Exception {
+            @Parameter(name = "BoardDTO", description = "", required = true) @Valid @RequestBody BoardDTO boardDTO)
+            throws Exception {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 

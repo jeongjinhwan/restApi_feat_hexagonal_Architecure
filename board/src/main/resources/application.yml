@@ -4,3 +4,25 @@ spring:
 
 server:
   port: 7000
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    configUrl: /v3/api-docs/swagger-config
+    url: /v3/api-docs
+  bearer:
+    name: BearerAuth
+    scheme: bearer
+    bearerFormat: JWT
+  info:
+    title: "openapi Test"
+    version: 1.0
+    description: 'openapi dddddddescription'
+  license:
+    name: Apache License Version 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
