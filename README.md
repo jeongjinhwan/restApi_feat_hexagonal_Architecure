@@ -1,6 +1,12 @@
+## 목차
+1. [Application spec](#Application-spec)
+2. [헥사고날 아키텍쳐](#헥사고날-아키텍쳐)
+3. [openapi.generator](#openapigenerator)
 ## Application spec
-1. [헥사고날 아키텍쳐](#헥사고날-아키텍쳐)
-2. [openapi.generator](#openapigenerator)
+- java 23
+- gradle 8.12
+- springframework.boot 3.4.1
+- openapi.generator 7.10.0
 ## 헥사고날 아키텍쳐
 - application 안의 service를 기준으로, in/out port를 interface 구성하여, 유연성과 확장성을 고려한 구조.
 - 기존의 mvc2 패턴과 비슷한 구조에서 영역을 명확화 하였다.
