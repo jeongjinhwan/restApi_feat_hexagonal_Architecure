@@ -1,6 +1,6 @@
 ## 목차
 1. [Application spec](#Application-spec)
-2. [헥사고날 아키텍쳐](#헥사고날-아키텍쳐)
+2. [hexagonal Architecure](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
 4. [springdoc.swagger](#Swagger)
 ## Application spec
