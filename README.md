@@ -4,6 +4,7 @@
 2. [hexagonal Architecure](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
 4. [springdoc.swagger](#Swagger)
+5. [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
   - restapi, swagger, hexagonal Architecure.
@@ -69,26 +70,7 @@
 ## openapi.generator
 - 오픈 소스, 확장성, 생산성, 서비스 개발 전 api in/out 정립.
 ## Swagger
-- rest api 지원을 위한 swagger 적용 및 SecurityScheme 설정 추가. 
-<details>
-<summary>참고</summary>
-
-### Reference Documentation
-For further reference, please consider the following sections:
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.1/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.4.1/gradle-plugin/packaging-oci-image.html)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.4.1/reference/using/devtools.html)
-* [Spring Web](https://docs.spring.io/spring-boot/3.4.1/reference/web/servlet.html)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-
-### Additional Links
-These additional references should also help you:
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-</details>
-
+- rest api 지원을 위한 swagger 적용 및 SecurityScheme 설정 추가.
+## Test
+- test url
+  - [http://localhost:7000/swagger-ui/index.html](http://localhost:7000/swagger-ui/index.html)
