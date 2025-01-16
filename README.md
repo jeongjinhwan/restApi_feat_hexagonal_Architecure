@@ -2,6 +2,7 @@
 1. [Application spec](#Application-spec)
 2. [헥사고날 아키텍쳐](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
+4. [springdoc.swagger](#Swagger)
 ## Application spec
 - java 23
 - gradle 8.12
@@ -10,7 +11,6 @@
 ## 헥사고날 아키텍쳐
 - application 안의 service를 기준으로, in/out port를 interface 구성하여, 유연성과 확장성을 고려한 구조.
 - 기존의 mvc2 패턴과 비슷한 구조에서 영역을 명확화 하였다.
-
 ### 구조.
 - 1단계.
 ```bash
@@ -60,7 +60,8 @@
 ```
 ## openapi.generator
 - 오픈 소스, 확장성, 생산성, 서비스 개발 전 api in/out 정립.
-
+## Swagger
+- rest api 지원을 위한 swagger 적용 및 SecurityScheme 설정 추가. 
 <details>
 <summary>참고</summary>
 
