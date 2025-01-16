@@ -1,8 +1,16 @@
 ## 목차
+1. [barnch](#Barnch-적용-내용)
 1. [Application spec](#Application-spec)
 2. [hexagonal Architecure](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
 4. [springdoc.swagger](#Swagger)
+## Branch 적용 내용
+- applyHexagoanl
+  - restapi, swagger, hexagonal Architecure.
+- applyOpenapiGen
+  - restapi, swagger, hexagonal Architecure, openapi-generator.
+- applyFeignClient
+  - restapi, swagger, hexagonal Architecure, openapi-generator, feignClient.
 ## Application spec
 - java 23
 - gradle 8.12
