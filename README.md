@@ -1,5 +1,5 @@
 ## 목차
-1. [barnch](#Barnch-적용-내용)
+1. [barnch](#Branch-적용-내용)
 1. [Application spec](#Application-spec)
 2. [hexagonal Architecure](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
