@@ -4,7 +4,8 @@
 2. [hexagonal Architecure](#헥사고날-아키텍쳐)
 3. [openapi.generator](#openapigenerator)
 4. [springdoc.swagger](#Swagger)
-5. [test](#test)
+5. [Feign Client]
+7. [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
   - restapi, swagger, hexagonal Architecure.
@@ -71,6 +72,9 @@
 - 오픈 소스, 확장성, 생산성, 서비스 개발 전 api in/out 정립.
 ## Swagger
 - rest api 지원을 위한 swagger 적용 및 SecurityScheme 설정 추가.
+## Feign Client
+### Feign logging
+> 참고 [https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging](https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging)
 ## Test
 - test url
   - [http://localhost:7000/swagger-ui/index.html](http://localhost:7000/swagger-ui/index.html)
