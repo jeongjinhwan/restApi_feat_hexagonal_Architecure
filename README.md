@@ -1,11 +1,13 @@
 ## 목차
-1. [barnch](#Branch-적용-내용)
-1. [Application spec](#Application-spec)
-2. [hexagonal Architecure](#헥사고날-아키텍쳐)
-3. [openapi.generator](#openapigenerator)
-4. [springdoc.swagger](#Swagger)
-5. [Feign Client]
-7. [test](#test)
+- [barnch](#Branch-적용-내용)
+- [Application spec](#Application-spec)
+- [hexagonal Architecure](#헥사고날-아키텍쳐)
+- [openapi.generator](#openapigenerator)
+- [springdoc.swagger](#Swagger)
+- [Feign Client](#Feign-Client)
+  - [warning](#warning)
+  - [Feign logging 설정](#Feign-logging-설정)
+- [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
   - restapi, swagger, hexagonal Architecure.
@@ -73,7 +75,23 @@
 ## Swagger
 - rest api 지원을 위한 swagger 적용 및 SecurityScheme 설정 추가.
 ## Feign Client
-### Feign logging
+### warning
+> As announced in Spring Cloud 2022.0.0 release blog entry, we’re now treating the Spring Cloud OpenFeign project as feature-complete. We are only going to be adding bugfixes and possibly merging some small community feature PRs. We suggest migrating over to Spring Interface Clients instead.
+### Feign logging 설정 
+application.yml
+```yaml
+logging.level.project.user.UserClient: DEBUG
+```
+config.java
+```java
+@Configuration
+public class FooConfiguration {
+	@Bean
+	Logger.Level feignLoggerLevel() {
+		return Logger.Level.FULL;
+	}
+}
+```
 > 참고 [https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging](https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging)
 ## Test
 - test url
