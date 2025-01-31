@@ -9,7 +9,7 @@
   - [warning](#warning)
   - [fc gradle 설정](#fc-gradle-설정)
   - [Feign logging 설정](#Feign-logging-설정)
-  - [end point 설정](#end-point-설정정)
+  - [end point 설정](#end-point-설정)
 - [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
