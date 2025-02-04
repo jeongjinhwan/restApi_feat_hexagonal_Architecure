@@ -1,0 +1,49 @@
+openapi: '3.0.2'
+info:
+  title: Sample user API
+  version: 1.0
+tags:
+ - name: user sample
+
+paths:
+  /v1/user/detail:
+    get:
+      tags:
+        - user
+      summary: 'API-ID: API_USER_0001 사용자 상세 내용 조회'
+      description: 사용자 상세 내용 조회 API
+      operationId: getDetail
+      parameters:
+        - name: userNo
+          in: query
+          description: 사용자 번호호
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        '200':
+          description: 상세내용 조회 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserVO'
+components:
+  schemas:
+    UserVO:
+      required:
+        - contents
+        - subject
+        - writer
+      type: object
+      properties:
+        userNo:
+          type: integer
+          description: 사용자 번호
+          format: int32
+          example: 1,2,3...
+        name:
+          type: string
+          description: 사용자명
+      description: 사용자

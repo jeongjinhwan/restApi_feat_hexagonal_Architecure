@@ -1,4 +1,9 @@
 spring:
+  config:
+    import:
+    - optional:classpath:/config/feignclient.yml
+    - optional:classpath:/config/authkeys.yml
+    - optional:classpath:/config/logging.yml
   application:
     name: board
 
@@ -15,6 +20,7 @@ springdoc:
     disable-swagger-default-url: true
     configUrl: /v3/api-docs/swagger-config
     url: /v3/api-docs
+    tryItOutEnabled: true
   bearer:
     name: BearerAuth
     scheme: bearer

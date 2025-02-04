@@ -11,6 +11,9 @@ public interface IBoardUseCase {
     // 조회.
     public List<Board> getList(String boardId);
 
+    // 상세 조회.
+    public Board getDetail(String boardId) throws Exception;
+
     // 등록.
     public int register(Board board);
 

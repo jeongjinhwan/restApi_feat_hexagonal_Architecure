@@ -1,0 +1,5 @@
+#end point
+user:
+  url: http://localhost/api/user
+kma:
+  url: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
