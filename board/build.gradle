@@ -15,6 +15,10 @@ java {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -22,46 +26,6 @@ configurations {
     all {
         exclude group: 'org.slf4j', module: 'slf4j-simple'
     }
-}
-
-def serverSwaggerMap = [
-    "sample": "board.yml"
-]
-
-serverSwaggerMap.each{entry ->
-    tasks.create("openApiGenerate-server-" + entry.key, org.openapitools.generator.gradle.plugin.tasks.GenerateTask, {
-        generatorName.set("spring")
-        library.set("spring-boot")
-        inputSpec.set(project.file("$rootDir/src/main/resources/openapi/${entry.value}").absolutePath)
-        outputDir.set(project.file("$buildDir/generated-sources").absolutePath)
-        apiPackage.set("com.${entry.key}.adapter.in.web")
-        modelPackage.set("com.${entry.key}.adapter.in.dto")
-        configOptions.set(
-            [
-                interfaceOnly: "true",
-                useBeanValidation: "true",
-                performBeanValidation: "true",
-                serializableModel: "true",
-                sourceFolder: "/java",
-                implFolder: "/java",
-                unhandledException: "true",
-                useTags: "true"
-            ]
-        )
-        importMappings.set([
-                "ServerHttpRequest" : "org.springframework.http.server.reactive.ServerHttpRequest",
-                "ServerHttpResponse" : "org.springframework.http.server.reactive.ServerHttpResponse"
-        ])
-    })
-}
-
-tasks.register("openApiGenerateServer") {
-    print serverSwaggerMap.entrySet().stream().map({entry -> "openApiGenerate-server-${entry.key}"}).toArray()
-    dependsOn(serverSwaggerMap.entrySet().stream().map({entry -> "openApiGenerate-server-${entry.key}"}).toArray())
-}
-
-tasks.register("openApiGenerateAll") {
-    dependsOn(["openApiGenerateServer"])
 }
 
 test {
@@ -76,9 +40,11 @@ sourceSets {
     }
 }
 
-repositories {
-    mavenCentral()
+ext {
+    set('springCloudVersion', "2024.0.0")
 }
+
+
 
 dependencies {
     // 기본 의존성 정보.
@@ -92,17 +58,82 @@ dependencies {
 
     // spring doc openapi 적용 정보.
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
     //  3. openapi generator 적용을 위한 정보
     implementation "org.openapitools:openapi-generator-gradle-plugin:7.8.0"
-
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
+
+    //feignClient
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }
 
-compileJava.dependsOn tasks.named("openApiGenerateServer")
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+// 여기 아래 부분을 별도의 파일로 분리 하고 싶어, 방법을 모르겠음.
+// openapi
+def serverSwaggerMap = [
+    "sample": "board.yml"
+]
+
+serverSwaggerMap.each{key, value ->
+    tasks.create("openApiGenerate-server-${key}", org.openapitools.generator.gradle.plugin.tasks.GenerateTask, {
+        generatorName.set("spring")
+        inputSpec.set(project.file("$rootDir/src/main/resources/openapi/${value}").absolutePath)
+        outputDir.set(project.file("$buildDir/generated-sources").absolutePath)
+        apiPackage.set("com.${key}.adapter.in.web")
+        modelPackage.set("com.${key}.adapter.in.dto")
+        configOptions.set(
+            [
+                library: "spring-boot",
+                interfaceOnly: "true",
+                useBeanValidation: "true",
+                performBeanValidation: "true",
+                serializableModel: "true",
+                sourceFolder: "/java",
+                implFolder: "/java",
+                unhandledException: "true",
+                useTags: "true"
+            ]
+        )
+    })
+}
+
+//feignClient
+def clientSwaggerMap = [
+    "user": "user.yml",
+    "kma": "kma.yml"
+]
+
+clientSwaggerMap.each{key, value ->
+    tasks.create("openApiGenerate-client-${key}", org.openapitools.generator.gradle.plugin.tasks.GenerateTask, {
+        generatorName.set("spring")
+        inputSpec.set(project.file("$rootDir/src/main/resources/openapi/client/${value}").absolutePath)
+        outputDir.set(project.file("$buildDir/generated-sources").absolutePath)
+        apiPackage.set("com.${key}.adapter.out.web")
+        modelPackage.set("com.${key}.adapter.out.vo")
+        configOptions.set(
+            [
+                library: "spring-cloud",
+                sourceFolder: "/java",
+                implFolder: "/java",
+                useTags: "true"
+            ]
+        )
+    })
+}
+
+tasks.register("openApiGenerate-all") {
+    dependsOn(serverSwaggerMap.entrySet().stream().map({e -> "openApiGenerate-server-${e.key}"}).toArray())
+    dependsOn(clientSwaggerMap.entrySet().stream().map({e -> "openApiGenerate-client-${e.key}"}).toArray())
+}
+
+compileJava.dependsOn tasks.named("openApiGenerate-all")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kma.adapter.out.vo.ResUltraSrtNcstVO;
 import com.sample.domain.Board;
 
 /**
@@ -26,4 +27,7 @@ public interface IBoardOutPort {
 
     // 생성.
     public int create();
+    
+    //kma 초단기실황조회
+    public ResUltraSrtNcstVO getUltraSrtNcst(String serviceKey, String numOfRows, String pageNo, String dataType, String baseDate, String baseTime, String nx, String ny);
 }

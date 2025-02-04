@@ -1,6 +1,8 @@
 ## list
 1. [SLF4J(W): Class path contains multiple SLF4J providers.](#1.-SLF4J(W):-Class-path-contains-multiple-SLF4J-providers.)
 2. [org.apache.httpcomponents.client5:httpclient5 버전 이슈](#2.-org.apache.httpcomponents.client5:httpclient5-버전-이슈)
+3. [java.lang.NoSuchMethodError: org.yaml.snakeyaml.constructor.SafeConstructor: method 'void <init>()' not found](#3.-java.lang.NoSuchMethodError:-org.yaml.snakeyaml.constructor.SafeConstructor:-method-'void-<init>()'-not-found)
+4. [vscode terminal 한글 깨짐 문제.](#4.-vscode-terminal-한글-깨짐-문제.)
 ---
 ## 1. SLF4J(W): Class path contains multiple SLF4J providers.
 ### Issue 
@@ -52,3 +54,9 @@ tasks.register("openApiGenerateServer") {
     dependsOn(serverSwaggerMap.entrySet().stream().map({entry -> "openApiGenerate-server-${entry.key}"}).toArray())
 }
 ```
+
+## 4. vscode terminal 한글 깨짐 문제.
+### Issue 
+> 한글 인코딩이 깨짐.
+### Resolution
+> 윈도우 > 제어판 > 국가 또는 지역 > 관리자 옵션 > 시스템 로컬 변경 > unicode UTF-8 사용

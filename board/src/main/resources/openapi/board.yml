@@ -78,7 +78,7 @@ paths:
             application/json:
               schema:
                 type: object
-  /v1/board/selectBoard:
+  /v1/board/list:
     get:
       tags:
         - board-controller
@@ -94,13 +94,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BoardDTO'
-  /v1/board/selectBoardByBoardNo:
+  /v1/board/detail:
     get:
       tags:
         - board-controller
       summary: 'API-ID: API_SAMPLE_0002 상세내용 조회'
       description: 상세내용 조회 API
-      operationId: selectBoardByBoardNo
+      operationId: getDetail
       parameters:
         - name: boardNo
           in: query
