@@ -61,7 +61,7 @@ public class BoardService implements IBoardUseCase {
     }
 
     @Override
-    public Board getDetail(String boardId) throws Exception {
+    public Board getDetail(String boardId) {
 
         String baseDate = LocalDate.now(Clock.system(ZoneId.of(SEOUL))).format(DateTimeFormatter.ofPattern(YYYY_MM_DD));
 
@@ -74,9 +74,6 @@ public class BoardService implements IBoardUseCase {
 
         // feign 호출 결과 확인.
         ResUltraSrtNcstVO resUltraSrtNcstVO = boardOutPort.getUltraSrtNcst(serviceKey, numOfRows, pageNo, dataType, baseDate, baseTime, nx, ny);
-        if (ObjectUtils.isEmpty(resUltraSrtNcstVO)) {
-            throw new Exception("userClient.getDetail body is empty");
-        }
         return Board.builder().boardNo(0).contents(resUltraSrtNcstVO.toString()).author("").build();
     }
 
