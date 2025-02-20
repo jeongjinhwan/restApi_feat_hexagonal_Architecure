@@ -1,0 +1,9 @@
+components:
+  schemas:
+    NamesVO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 사용자명
+      description: 사용자명 

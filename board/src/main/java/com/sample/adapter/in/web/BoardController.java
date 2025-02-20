@@ -19,29 +19,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController implements BoardControllerApi {
 
-    private final IBoardUseCase boardUseCase;
-    private final ObjectMapper objectMapper;
+  private final IBoardUseCase boardUseCase;
+  private final ObjectMapper objectMapper;
 
-    @GetMapping("/hi")
-    public String getHi(@RequestParam String param) {
-        return "hi~";
-    }
+  @GetMapping("/hi")
+  public String getHi(@RequestParam String param) {
+    return "hi~";
+  }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Board>> getList() {
-        return ResponseEntity.ok(boardUseCase.getList("0"));
-    }
+  @GetMapping("/list")
+  public ResponseEntity<List<Board>> getList() {
+    return ResponseEntity.ok(boardUseCase.getList("0"));
+  }
 
-    @Override
-    public ResponseEntity<Object> createBoard(BoardDTO boardDTO) throws Exception {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
+  @Override
+  public ResponseEntity<Object> createBoard(BoardDTO boardDTO) throws Exception {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
 
-    @Override
-    public ResponseEntity<BoardDTO> getDetail(Integer boardNo) throws Exception {
-        Board getBoard = boardUseCase.getDetail("0");
-        BoardDTO getBoardDTO = objectMapper.convertValue(getBoard, BoardDTO.class);
-        return ResponseEntity.ok(getBoardDTO);
-    }
+  @Override
+  public ResponseEntity<BoardDTO> getDetail(Integer boardNo) throws Exception {
+    Board getBoard = boardUseCase.getDetail("0");
+    BoardDTO getBoardDTO = objectMapper.convertValue(getBoard, BoardDTO.class);
+    return ResponseEntity.ok(getBoardDTO);
+  }
 
 }
