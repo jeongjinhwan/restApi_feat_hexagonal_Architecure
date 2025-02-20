@@ -10,6 +10,7 @@
   - [fc gradle 설정](#fc-gradle-설정)
   - [Feign logging 설정](#Feign-logging-설정)
   - [end point 설정](#end-point-설정)
+- [ModelMapper](#ModelMapper)
 - [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
@@ -170,6 +171,12 @@ spring:
 > 공식 설정 [https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging](#https://docs.spring.io/spring-cloud-openfeign/reference/spring-cloud-openfeign.html#feign-logging)
 >
 > 적용 된 설정 [https://docs.spring.io/spring-boot/reference/features/external-config.html](#https://docs.spring.io/spring-boot/reference/features/external-config.html)
+## ModelMapper
+dto(화면의output)와 vo(feignclient 통신 response / DB 조회 결과)간의 효율적인 변환을 위해.
+### gradle 
+### config
+### src
+[https://modelmapper.org/](#https://modelmapper.org/)
 ## Test
 - test url
   - [http://localhost:7000/swagger-ui/index.html](http://localhost:7000/swagger-ui/index.html)
