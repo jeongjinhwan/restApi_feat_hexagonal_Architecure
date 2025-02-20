@@ -1,0 +1,16 @@
+{{#operations}}
+  {{#operation}}
+    @{{httpMethod}}("{{path}}")
+    {{#authMethods}}
+      {{#isOAuth}}
+        @PreAuthorize("hasRole('ROLE_{{role}}')")
+      {{/isOAuth}}
+    {{/authMethods}}
+    public {{returnType}} {{nickname}}({{#parameters}}{{>parameter}}, {{/parameters}}) throws Exception {
+      
+      {{#returnType}}
+        return new {{returnType}}();
+      {{/returnType}}
+    }
+  {{/operation}}
+{{/operations}}

@@ -1,4 +1,4 @@
-package com.common;
+package com.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +8,13 @@ import feign.Logger;
 @Configuration
 public class FeignLoggerConfig {
 
-    /**
-     * feign client log
-     * @return
-     */
-    @Bean
-    Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
-    }
+  /**
+   * feign client log
+   * 
+   * @return
+   */
+  @Bean
+  Logger.Level feignLoggerLevel() {
+    return Logger.Level.FULL;
+  }
 }

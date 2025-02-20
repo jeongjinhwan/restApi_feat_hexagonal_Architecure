@@ -1,6 +1,6 @@
 openapi: '3.0.2'
 info:
-  title: Meteorological Administration API
+  title: kma API
   version: 1.0
 tags:
  - name: kma
@@ -9,59 +9,23 @@ paths:
   /getUltraSrtNcst:
     get:
       tags:
-        - kma
+        - kma-controller
       summary: '초단기실황조회'
       description: "실황정보를 조회하기 위해 발표일자, 발표시각, 예보지점 X 좌표, 예보지점 Y 좌표의 조회 조건으로 자료구분코드, 실황값, 발표일자, 발표시각, 예보지점 X 좌표, 예보지점 Y 좌표의 정보를 조회하는 기능"
       operationId: getUltraSrtNcst
       parameters:
-        - name: serviceKey
+        - name: lon
           in: query
-          description: "인증키(URL Encode) - 공공데이터포털에서 발급받은 인증키 (size 100)"
+          description: "경도"
           schema:
             type: string
-          example: a8s7d9a8s7d...
-        - name: numOfRows
+          example: 126.92980
+        - name: lat
           in: query
-          description: "한 페이지 결과 수 - Default: 10 (size 4)"
+          description: "위도"
           schema:
             type: string
-          example: 10
-        - name: pageNo
-          in: query
-          description: "페이지 번호 - Default: 1 (size 4)"
-          schema:
-            type: string
-          example: 1
-        - name: dataType
-          in: query
-          description: "요청자료형식(XML/JSON) - Default: XML (size 4)"
-          schema:
-            type: string
-          example: JSON
-        - name: base_date
-          in: query
-          description: "21년 6월 28일 발표 (size 8)"
-          schema:
-            type: string
-          example: 20210628
-        - name: base_time
-          in: query
-          description: "06시 발표(정시단위) - 매시각 10분 이후 호출 (size 4)"
-          schema:
-            type: string
-          example: 0600
-        - name: nx
-          in: query
-          description: "예보지점의 X 좌표값 (size 2)"
-          schema:
-            type: string
-          example: 55
-        - name: ny
-          in: query
-          description: "예보지점의 Y 좌표값 (size 2)"
-          schema:
-            type: string
-          example: 127
+          example: 37.48819
       responses:
         '200':
           description: 응답 메시지 명세.
@@ -136,5 +100,3 @@ components:
                 totalCount:
                   type: integer
                   description: Total number of items.
-    name:
-      $ref: './nameVO.yml#/components/schemas/NamesVO'

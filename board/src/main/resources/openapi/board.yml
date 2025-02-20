@@ -1,38 +1,38 @@
-openapi: '3.0.2'
+openapi: "3.0.2"
 info:
   title: Sample Board API
   version: 1.0
 tags:
- - name: board sample
+  - name: board sample
 
 paths:
   /v1/board/updateBoard:
     post:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0004 게시글 수정'
+      summary: "API-ID: API_SAMPLE_0004 게시글 수정"
       description: 게시글 수정 API
       operationId: updateBoard
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BoardDTO'
+              $ref: "#/components/schemas/BoardDTO"
         required: true
       responses:
-        '200':
+        "200":
           description: 게시글 수정 성공
           content:
             application/json:
               schema:
                 type: object
-        '400':
+        "400":
           description: 값을 잘못 입력할 경우 에러를 반환합니다.
           content:
             application/json:
               schema:
                 type: object
-        '409':
+        "409":
           description: 이미 유저 계정이 동일한 게 존재할 경우 에러를 반환합니다.
           content:
             application/json:
@@ -42,17 +42,17 @@ paths:
     post:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0005 게시글 삭제'
+      summary: "API-ID: API_SAMPLE_0005 게시글 삭제"
       description: 게시글 삭제 API
       operationId: deleteBoard
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BoardDTO'
+              $ref: "#/components/schemas/BoardDTO"
         required: true
       responses:
-        '200':
+        "200":
           description: 게시글 삭제 성공
           content:
             application/json:
@@ -62,17 +62,17 @@ paths:
     post:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0003 게시글 등록'
+      summary: "API-ID: API_SAMPLE_0003 게시글 등록"
       description: 게시글 등록 API
       operationId: createBoard
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BoardDTO'
+              $ref: "#/components/schemas/BoardDTO"
         required: true
       responses:
-        '200':
+        "200":
           description: 게시글 등록 성공
           content:
             application/json:
@@ -82,23 +82,23 @@ paths:
     get:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0001 리스트 조회'
+      summary: "API-ID: API_SAMPLE_0001 리스트 조회"
       description: 리스트 조회 API
       operationId: selectBoard
       responses:
-        '200':
+        "200":
           description: 리스트 조회 성공
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BoardDTO'
+                  $ref: "#/components/schemas/BoardDTO"
   /v1/board/detail:
     get:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0002 상세내용 조회'
+      summary: "API-ID: API_SAMPLE_0002 상세내용 조회"
       description: 상세내용 조회 API
       operationId: getDetail
       parameters:
@@ -111,19 +111,19 @@ paths:
             format: int32
           example: 1
       responses:
-        '200':
+        "200":
           description: 상세내용 조회 성공
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BoardDTO'
+                $ref: "#/components/schemas/BoardDTO"
   /v1/board/hello:
     get:
       tags:
         - board-controller
       operationId: getHello_1
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -133,11 +133,11 @@ paths:
     get:
       tags:
         - board-controller
-      summary: 'API-ID: API_SAMPLE_0006 테이블 생성'
+      summary: "API-ID: API_SAMPLE_0006 테이블 생성"
       description: 테이블 생성 API
       operationId: createBoardDDL
       responses:
-        '200':
+        "200":
           description: 테이블 생성 성공
           content:
             application/json:

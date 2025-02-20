@@ -44,6 +44,5 @@ components:
           format: int32
           example: 1,2,3...
         name:
-          type: string
-          description: 사용자명
+          $ref: './nameVO.yml#/components/schemas/NamesVO'
       description: 사용자
