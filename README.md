@@ -11,6 +11,8 @@
   - [Feign logging 설정](#Feign-logging-설정)
   - [end point 설정](#end-point-설정)
 - [ModelMapper](#ModelMapper)
+- [spring](#spring)
+  - [di](#di)
 - [test](#test)
 ## Branch 적용 내용
 - applyHexagoanl
@@ -174,9 +176,61 @@ spring:
 ## ModelMapper
 dto(화면의output)와 vo(feignclient 통신 response / DB 조회 결과)간의 효율적인 변환을 위해.
 ### gradle 
+```gradle
+implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.2'
+```
 ### config
+```java
+@Configuration
+public class ModelMapConfig {
+
+  @Bean
+  public ModelMapper modelMapper(){
+    return new ModelMapper();
+  }
+}
+```
 ### src
-[https://modelmapper.org/](#https://modelmapper.org/)
+```java
+@Service
+@RequiredArgsConstructor
+public class KmaService implements IKmaUseCase {
+
+  private final ModelMapper modelMapper;
+
+  public ResUltraSrtNcstDTO getUltraSrtNcst(KMA reqKma) {
+    ResUltraSrtNcstVO resUltraSrtNcstVo = ...
+    ResUltraSrtNcstDTO resUltraSrtNcstDTO = modelMapper.map(resUltraSrtNcstVo, ResUltraSrtNcstDTO.class);
+    return resUltraSrtNcstDTO;
+  }
+}
+```
+### 참고
+- [https://modelmapper.org/](#https://modelmapper.org/)
+## spring
+### di
+의존성 주입 방법.(공식 가이드)
+```java
+public class SimpleMovieLister {
+	// the SimpleMovieLister has a dependency on a MovieFinder
+	private final MovieFinder movieFinder;
+	// a constructor so that the Spring container can inject a MovieFinder
+	public SimpleMovieLister(MovieFinder movieFinder) {
+		this.movieFinder = movieFinder;
+	}
+	// business logic that actually uses the injected MovieFinder is omitted...
+}
+```
+의존성 주입 방법.(lombko 활용)
+```java
+@RequiredArgsConstructor
+public class SimpleMovieLister {
+	// the SimpleMovieLister has a dependency on a MovieFinder
+	private final MovieFinder movieFinder;
+	// business logic that actually uses the injected MovieFinder is omitted...
+}
+```
+- [https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html#beans-setter-injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html#beans-setter-injection)
 ## Test
 - test url
   - [http://localhost:7000/swagger-ui/index.html](http://localhost:7000/swagger-ui/index.html)
