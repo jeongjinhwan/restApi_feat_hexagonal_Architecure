@@ -47,6 +47,7 @@ ext {
 
 
 dependencies {
+  implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.2'
   // 기본 의존성 정보.
   implementation 'org.springframework.boot:spring-boot-starter-web'
   compileOnly 'org.projectlombok:lombok'
@@ -73,6 +74,10 @@ dependencies {
 
   //aop
   implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+  //xml feignClient 응답 중 xml이 오는 경우 파싱용.
+  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2' // 최신 버전으로 추가
+
 
 }
 

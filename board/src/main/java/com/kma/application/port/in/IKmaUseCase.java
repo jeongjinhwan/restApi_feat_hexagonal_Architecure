@@ -5,8 +5,8 @@ import java.time.zone.ZoneRulesException;
 
 import org.springframework.stereotype.Service;
 
-import com.kma.adapter.in.dto.ResUltraSrtNcstVO;
-import com.kma.domain.KMA;
+import com.kma.domain.RequestKMA;
+import com.kma.domain.ResponseKMA;
 
 /**
  * 기상청 정보 조회.
@@ -15,10 +15,11 @@ import com.kma.domain.KMA;
 public interface IKmaUseCase {
   /**
    * 초 단위 예보 조회.
-   * @param kmaReq
+   * 
+   * @param reqKma
    * @return
    * @throws ZoneRulesException
    * @throws SocketTimeoutException
    */
-  public ResUltraSrtNcstVO getUltraSrtNcst(KMA kmaReq) throws SocketTimeoutException;
+  public ResponseKMA getUltraSrtNcst(RequestKMA reqKma) throws ZoneRulesException, SocketTimeoutException;
 }
