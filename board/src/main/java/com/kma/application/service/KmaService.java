@@ -1,42 +1,53 @@
 package com.kma.application.service;
 
 import java.net.SocketTimeoutException;
+import java.time.zone.ZoneRulesException;
 
 import org.springframework.stereotype.Service;
 
-import com.kma.adapter.in.dto.ResUltraSrtNcstVO;
+import com.common.exception.BizException;
+import com.kma.adapter.out.vo.ResUltraSrtNcstVO;
 import com.kma.application.port.in.IKmaUseCase;
 import com.kma.application.port.out.IKmaOutPort;
-import com.kma.domain.KMA;
+import com.kma.common.CommonCodeKMA;
+import com.kma.domain.ItemKMA;
+import com.kma.domain.RequestKMA;
+import com.kma.domain.ResponseKMA;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 기상청 정보 조회.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KmaService implements IKmaUseCase {
-
   private final IKmaOutPort kmaOutPort;
 
-  public ResUltraSrtNcstVO getUltraSrtNcst(KMA reqKma) throws SocketTimeoutException {
+  public ResponseKMA getUltraSrtNcst(RequestKMA reqKma) throws ZoneRulesException, SocketTimeoutException {
 
-    ResUltraSrtNcstVO resUltraSrtNcstVO = null;
-    // try {
-    //   resUltraSrtNcstVO = kmaOutPort.getUltraSrtNcst(reqKma.getServiceKey(), reqKma.getNumOfRows(), reqKma.getPageNo(),
-    //       reqKma.getDataType(), reqKma.getBaseDate(),
-    //       reqKma.getBaseTime(), reqKma.getNx(), reqKma.getNy());
+    reqKma.setXY();
+    ResUltraSrtNcstVO resUltraSrtNcstVO = kmaOutPort.getUltraSrtNcst(reqKma);
 
-    // } catch (SocketTimeoutException se) {
-    //   se.printStackTrace();
-    //   resUltraSrtNcstVO = new ResUltraSrtNcstVO();
-    // }
+    ResponseKMA resKma = new ResponseKMA(resUltraSrtNcstVO);
+    if (!resKma.isSuccessfulResponse()) {
+      log.error("[getUltraSrtNcst]request:{},response:{}", reqKma.toString(), resUltraSrtNcstVO.toString());
+      throw new BizException("KMA_ERR", "MSG0001"); // 출력 데이터 없습니다.
+    }
 
-    return null;
+    resUltraSrtNcstVO.getResponse().getBody().getItems().getItem().forEach(e -> {
 
-    // return
-    // Board.builder().boardNo(0).contents(resUltraSrtNcstVO.toString()).author("").build();
+      CommonCodeKMA ccKMA = CommonCodeKMA.getByCode(e.getCategory().getValue());
+      resKma.addItem(
+          ItemKMA.builder()
+              .category(ccKMA.getItmNm())
+              .unitNm(ccKMA.getUnitNm())
+              .obsrValue(e.getObsrValue())
+              .build());
+    });
+
+    return resKma;
   }
-
 }

@@ -1,0 +1,30 @@
+components:
+  schemas:
+    resUltraSrtNcstDTO:
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+                description: Category of the observation data.
+              unitNm:
+                type: string
+                description: Observed value.
+              obsrValue:
+                type: string
+                description: Observed value.
+        nx:
+          type: integer
+          description: X-coordinate of the grid.
+        ny:
+          type: integer
+          description: Y-coordinate of the grid.
+        baseDate:
+          type: string
+          description: Base date of the observation.
+        baseTime:
+          type: string
+          description: Base time of the observation.
