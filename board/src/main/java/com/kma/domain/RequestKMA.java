@@ -61,13 +61,18 @@ public class RequestKMA {
     if (NumberUtils.isCreatable(lon) && NumberUtils.isCreatable(lat)) {
       LocationXY lxy = LocationXY.builder()
           .lon(Double.parseDouble(lon)).lat(Double.parseDouble(lat)).build();
+      // log.debug("{}", lxy.toString());
       PointXY pxy = MapConverter.getLocationToPoint(lxy);
+      // log.debug("{}", pxy.toString());
+
       nx = String.valueOf(pxy.getIntX());
       ny = String.valueOf(pxy.getIntY());
-      if(pxy.getIntX() < 0 || pxy.getIntY() < 0){
-        throw new BizException("NUM_ERR_RESULT_MINUS", "MSG10001");
+      if (pxy.getIntX() <= 0 && pxy.getIntY() <= 0) {
+        log.error("{}", "결과 값이 0 보다 작다.");
+        throw new BizException("NUM_ERR_UNDER_ZERO", "MSG10001");
       }
     } else {
+      log.error("{}", "입력 값이 없다 이놈아 !!!");
       throw new BizException("NUM_ERR", "MSG10001");
     }
   }
