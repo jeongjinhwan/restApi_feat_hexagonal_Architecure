@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class OpenApiConfig {
@@ -33,9 +34,13 @@ public class OpenApiConfig {
   @Value("${springdoc.license.url}")
   public String licenseUrl;
 
+  @Value("${server.root-url}")
+  public String rootUrl;
+
   @Bean
   public OpenAPI customOpenAPI() {
     return new OpenAPI()
+        .addServersItem(new Server().url(rootUrl))
         .info(getInfo())
         .addSecurityItem(addBearerRequest())
         .components(comBearerAuth());
