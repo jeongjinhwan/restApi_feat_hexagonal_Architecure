@@ -52,7 +52,7 @@ public class RequestKMA {
    * 위도
    */
   private String lat;
-  
+
   /**
    * 위도, 경도를 기준으로<br>
    * X,Y 좌표계를 만듭니다.
@@ -64,6 +64,9 @@ public class RequestKMA {
       PointXY pxy = MapConverter.getLocationToPoint(lxy);
       nx = String.valueOf(pxy.getIntX());
       ny = String.valueOf(pxy.getIntY());
+      if(pxy.getIntX() < 0 || pxy.getIntY() < 0){
+        throw new BizException("NUM_ERR_RESULT_MINUS", "MSG10001");
+      }
     } else {
       throw new BizException("NUM_ERR", "MSG10001");
     }

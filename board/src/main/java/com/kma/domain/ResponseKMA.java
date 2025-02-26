@@ -13,10 +13,12 @@ import com.kma.adapter.out.vo.ResUltraSrtNcstVOResponseBodyItemsItemInner;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 응답을 담는 domain
  */
+@Slf4j
 @Getter
 @ToString
 @AllArgsConstructor
@@ -31,11 +33,16 @@ public class ResponseKMA {
 
   public ResponseKMA(ResUltraSrtNcstVO resUltraSrtNcstVo) {
     resultCode = getResultCode(resUltraSrtNcstVo);
-    ResUltraSrtNcstVOResponseBodyItemsItemInner itm = resUltraSrtNcstVo.getResponse().getBody().getItems().getItem().getFirst();
-    ny = itm.getNy();
-    nx = itm.getNx();
-    baseDate = itm.getBaseDate();
-    baseTime = itm.getBaseTime();
+    try {
+      ResUltraSrtNcstVOResponseBodyItemsItemInner itm = resUltraSrtNcstVo.getResponse().getBody().getItems().getItem()
+          .getFirst();
+      ny = itm.getNy();
+      nx = itm.getNx();
+      baseDate = itm.getBaseDate();
+      baseTime = itm.getBaseTime();
+    } catch (NullPointerException ne) {
+      throw new BizException("KMA_ERR_NO_BODY", "MSG0001"); // 출력 데이터 없습니다.
+    }
     items = new ArrayList<ItemKMA>();
   }
 

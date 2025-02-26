@@ -16,7 +16,7 @@ class BoardApplicationTests {
 
   @Test
   void contextLoads() {
-    // time_test(); // ok 
+    time_test(); // ok 
     mapConvert_test(126.980384d, 37.567154d); // ok
     System.out.println(TimeUtils.nowTime());
   }
